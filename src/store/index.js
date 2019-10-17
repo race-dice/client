@@ -15,12 +15,6 @@ export default new Vuex.Store({
       state.name = null;
     }
   },
-  actions: {
-    checkStatus(context) {
-      if (!context.state.name) {
-        this.$router.push("/");
-      }
-    }
-  },
+  actions: {},
   modules: {}
 });
