@@ -55,6 +55,7 @@ export default {
         url: `http://localhost:3000/user/${this.room._id}`
       })
         .then(({ data }) => {
+          console.log(data)
           this.players = data;
         })
         .catch(console.log);
