@@ -15,18 +15,17 @@ export default {
     Navbar
   },
   data() {
-      rooms: []
+    [];
   },
   methods: {
-      fetchRooms() {
-          Axios({
-              method: "get",
-              url: "http://localhost:3000/room"
-          })
-          .then(rooms => {
-              this.rooms = rooms
-          })
-      }
+    fetchRooms() {
+      Axios({
+        method: "get",
+        url: "http://localhost:3000/room"
+      }).then(rooms => {
+        this.rooms = rooms;
+      });
+    }
   },
   mounted() {
     this.$store.dispatch("checkStatus");
