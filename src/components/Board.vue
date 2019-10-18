@@ -95,7 +95,7 @@ export default {
                     // this.$store.state.dice.result = this.result;
                     this.car1 += this.result 
                     this.numberOfRolls = 0;
-                }, 500);
+                }, 1000);
                 return;
             }
             this.tap()
@@ -104,7 +104,7 @@ export default {
             }, 500);
     },
     tap() {
-      this.car1 += Math.floor(Math.random() * 6);
+      // this.car1 += Math.floor(Math.random() * 6);
       if (this.car1 >= 30) {
         Swal.fire("Congrats!!", "You Won!!", "success");
       }
