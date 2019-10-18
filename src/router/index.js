@@ -24,7 +24,7 @@ const routes = [
     path: "/game",
     name: "game",
     component: () =>
-    import(/* webpackChunkName: "game" */ "@/components/Board.vue")
+      import(/* webpackChunkName: "game" */ "@/components/Board.vue")
   }
 ];
 
