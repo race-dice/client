@@ -32,15 +32,32 @@ export default {
     return {
       socket: io.connect("http://localhost:3000"),
       allplayer: [],
-      id: "",
-      posisi: 0
+      id: ""
+      // posisi: 0
     };
   },
   methods: {
     random() {
       let rand = Math.ceil(Math.random() * Math.floor(20));
-      // this.allplayer[0].posisi 
-      this.posisi += rand;
+      if (this.allplayer[0].posisi + rand >= 100){
+        this.allplayer[0].posisi = 100
+        this.socket.emit('sendData', this.allplayer[0].posisi)
+        alert("menangg")
+        this.allplayer[0].posisi = 0
+        this.socket.emit('sendData', this.allplayer[0].posisi)
+      }
+      else{
+        this.allplayer[0].posisi += rand
+      }
+      // this.posisi += rand;
+      // axios({
+      //   method: "patch",
+      //   url: "http://localhost:3000/user/5da889c91c9d440000e384fb",
+      //   data: {
+      //     posisi: this.allplayer[0].posisi
+      //   }
+      // });
+      this.socket.emit('sendData', this.allplayer[0].posisi)
     },
     getdata() {
       axios({
@@ -49,38 +66,11 @@ export default {
       });
     }
   },
-  watch: {
-    posisi() {
-      console.log(this.allplayer);
-      axios({
-        method: "patch",
-        url: "http://localhost:3000/user/5da889c91c9d440000e384fb",
-        data: {
-          posisi: this.posisi
-        }
-      });
-      // this.socket.on("datauser", payload => {
-      //   this.allplayer = payload;
-      //   this.posisi = payload[0].posisi;
-      //   console.log(this.allplayer, "masuk di emit");
-      // });
-      // .then(({data}) => {
-      //   this.allplayer = data
-      //   console.log(data);
-
-      //   if (data.posisi >= 100) {
-      //     data.posisi = 95;
-      //     alert("menangg");
-      //   }
-      // })
-    }
-  },
   created() {
     this.getdata();
     this.socket.on("datauser", payload => {
       this.allplayer = payload;
-      // this.posisi = payload[0].posisi;
-      console.log(this.allplayer, "masuk di emit");
+      // console.log(this.allplayer, "masuk di emit");
     });
   }
 };
