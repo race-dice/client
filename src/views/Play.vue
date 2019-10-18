@@ -2,7 +2,10 @@
   <div class="container">
     <div class="position" v-for="(player, index) in allplayer" :key="index">
       <div class="player">
-        <div v-if="player.name === 'b'" :style="'margin-left:' + posisi + '%;'">
+        <div
+          v-if="player.name === 'b'"
+          :style="'margin-left:' + player.posisi + '%;'"
+        >
           1
         </div>
         <div
@@ -28,57 +31,57 @@ export default {
   data() {
     return {
       socket: io.connect("http://localhost:3000"),
-      posisi: 1,
-      allplayer: [
-        {
-          name: "a",
-          posisi: 3
-        },
-        {
-          name: "b",
-          posisi: 2
-        },
-        {
-          name: "c",
-          posisi: 6
-        }
-      ],
-      id: ""
+      allplayer: [],
+      id: "",
+      posisi: 0
     };
   },
   methods: {
     random() {
-      let rand = Math.floor(Math.random() * Math.floor(20));
+      let rand = Math.ceil(Math.random() * Math.floor(20));
+      // this.allplayer[0].posisi
       this.posisi += rand;
-      if (this.posisi >= 100) {
-        this.posisi = 95;
-        alert("menangg");
-      }
     },
     getdata() {
       axios({
         method: "get",
         url: "http://localhost:3000/user"
-      })
-        .then(({ data }) => {
-          // console.log("berhasil client");
-          console.log(data);
+      });
+    }
+  },
+  watch: {
+    posisi() {
+      console.log(this.allplayer);
+      axios({
+        method: "patch",
+        url: "http://localhost:3000/user/5da889c91c9d440000e384fb",
+        data: {
+          posisi: this.posisi
+        }
+      });
+      // this.socket.on("datauser", payload => {
+      //   this.allplayer = payload;
+      //   this.posisi = payload[0].posisi;
+      //   console.log(this.allplayer, "masuk di emit");
+      // });
+      // .then(({data}) => {
+      //   this.allplayer = data
+      //   console.log(data);
 
-          this.socket.emit("datauser");
-
-          this.socket.on("datauser", datauser => {
-            this.allplayer = datauser;
-            console.log(this.allplayer, "masuk di emit");
-          });
-        })
-        .catch(data => {
-          console.log("errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-          console.log(data);
-        });
+      //   if (data.posisi >= 100) {
+      //     data.posisi = 95;
+      //     alert("menangg");
+      //   }
+      // })
     }
   },
   created() {
     this.getdata();
+    this.socket.on("datauser", payload => {
+      this.allplayer = payload;
+      // this.posisi = payload[0].posisi;
+      console.log(this.allplayer, "masuk di emit");
+    });
   }
 };
 </script>

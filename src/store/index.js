@@ -10,7 +10,9 @@ export default new Vuex.Store({
   },
   mutations: {
     login(state, payload) {
-      state.username = payload;
+      const { username, token } = payload;
+      state.username = username;
+      state.token = token;
     },
     logout(state) {
       state.username = null;

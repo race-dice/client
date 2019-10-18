@@ -47,6 +47,7 @@ export default {
       Axios({
         method: "post",
         url: "http://localhost:3000/room",
+        headers: { token: this.$store.state.token },
         data
       })
         .then(({ data }) => {
@@ -58,14 +59,15 @@ export default {
     fetchRooms() {
       Axios({
         method: "get",
-        url: "http://localhost:3000/room"
+        url: "http://localhost:3000/room",
+        headers: { token: this.$store.state.token }
       }).then(({ data }) => {
         this.rooms = data;
-        // this.socket.on("dataroom", payload => {
-        //   this.rooms = payload;
-        //   console.log("masuk");
-        // });
-        // console.log(this.rooms);
+        this.socket.on("dataroom", payload => {
+          this.rooms = payload;
+          console.log("masuk");
+        });
+        console.log(this.rooms);
       });
     },
     logout() {
@@ -92,5 +94,9 @@ export default {
   margin-top: 10px;
   background-color: #eaeaea;
   min-height: 69vh;
+}
+
+audio {
+  visibility: hidden;
 }
 </style>
