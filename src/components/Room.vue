@@ -25,19 +25,23 @@ export default {
   },
   methods: {
     verify() {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You are going to untouched grounds!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, I'm Sure!"
-      }).then(result => {
-        if (result.value) {
-          this.$router.push("/game");
-        }
-      });
+      if (this.room.players.length < 2) {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You are going to untouched grounds!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, I'm Sure!"
+        }).then(result => {
+          if (result.value) {
+            this.$router.push("/game");
+          }
+        });
+      } else {
+        Swal.fire("Oops", "Room Is Already Full", "error");
+      }
     }
   }
 };
