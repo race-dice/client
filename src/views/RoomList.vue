@@ -43,16 +43,23 @@ export default {
   },
   methods: {
     addRoom() {
-      const data = { name: this.roomName };
+      const room = { name: this.roomName };
       Axios({
         method: "post",
         url: "http://localhost:3000/room",
         headers: { token: this.$store.state.token },
-        data
+        data: room
       })
         .then(({ data }) => {
-          this.$store.commit("setRoom", data.name);
-          this.$router.push("/game");
+          Axios({
+            method: "patch",
+            url: `http://localhost:3000/user/${data._id}`,
+            headers: { token: this.$store.state.token }
+          })
+          .then(() => {
+            this.$store.commit("setRoom", data.name);
+            this.$router.push("/game");
+          })
         })
         .catch(console.log);
     },
