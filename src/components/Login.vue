@@ -1,16 +1,21 @@
 <template>
   <div class="container">
-    <b-form @submit.prevent="login">
-      <b-form-group label="Name:">
-        <b-form-input
-          v-model="name"
-          type="text"
-          required
-          placeholder="Enter Your Name"
-        ></b-form-input>
-      </b-form-group>
-      <b-button type="submit" variant="primary">Submit</b-button>
-    </b-form>
+    <b-card>
+      <b-card-text>
+        <b-form @submit.prevent="login">
+          <b-form-group>
+            <h4>Name:</h4>
+            <b-form-input
+              v-model="name"
+              type="text"
+              required
+              placeholder="Enter Your Name"
+            ></b-form-input>
+          </b-form-group>
+          <b-button type="submit" variant="primary">Submit</b-button>
+        </b-form>
+      </b-card-text>
+    </b-card>
   </div>
 </template>
 
@@ -32,10 +37,17 @@ export default {
 
 <style scoped>
 div {
-  margin-top: 30%;
+  margin-top: 10%;
 }
 input {
-  width: 40vw;
+  width: 25vw;
   margin: auto;
+}
+.card {
+  background-color: #eaeaea;
+  height: 30vh !important;
+  width: 50vw;
+  margin-left: 20%;
+  justify-content: center !important;
 }
 </style>
