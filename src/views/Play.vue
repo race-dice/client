@@ -39,7 +39,7 @@ export default {
   methods: {
     random() {
       let rand = Math.ceil(Math.random() * Math.floor(20));
-      // this.allplayer[0].posisi 
+      // this.allplayer[0].posisi
       this.posisi += rand;
     },
     getdata() {

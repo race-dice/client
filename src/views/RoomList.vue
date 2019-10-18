@@ -26,6 +26,7 @@
 import Navbar from "@/components/Navbar";
 import Axios from "axios";
 import Room from "@/components/Room";
+import io from "socket.io-client";
 
 export default {
   name: "RoomList",
@@ -36,23 +37,37 @@ export default {
   data() {
     return {
       rooms: [],
-      roomName: ""
+      roomName: "",
+      socket: io.connect("http://localhost:3000")
     };
   },
   methods: {
     addRoom() {
-      const data = {
-        name: this.roomName,
-        players: [{ name: this.$store.state.name }]
-      };
-      console.log(data);
+      const data = { name: this.roomName };
+      Axios({
+        method: "post",
+        url: "http://localhost:3000/room",
+        headers: { token: this.$store.state.token },
+        data
+      })
+        .then(({ data }) => {
+          this.$store.commit("setRoom", data.name);
+          this.$router.push("/game");
+        })
+        .catch(console.log);
     },
     fetchRooms() {
       Axios({
         method: "get",
-        url: "http://localhost:3000/room"
+        url: "http://localhost:3000/room",
+        headers: { token: this.$store.state.token }
       }).then(({ data }) => {
         this.rooms = data;
+        this.socket.on("dataroom", payload => {
+          this.rooms = payload;
+          console.log("masuk");
+        });
+        console.log(this.rooms);
       });
     },
     logout() {
@@ -61,7 +76,11 @@ export default {
     }
   },
   mounted() {
-    this.$store.state.name ? this.fetchRooms() : this.$router.push("/");
+    this.$store.state.username ? this.fetchRooms() : this.$router.push("/");
+    this.socket.on("dataroom", payload => {
+      this.rooms = payload;
+      console.log("masuk");
+    });
   }
 };
 </script>
