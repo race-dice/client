@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar>
-      <b-navbar-brand><h2>Balap Dadu</h2></b-navbar-brand>
+      <b-navbar-brand><h2>Dice Race</h2></b-navbar-brand>
       <b-navbar-nav class="ml-auto">
         <slot></slot>
       </b-navbar-nav>

@@ -2,10 +2,16 @@
   <div>
     <Navbar><b-button @click="logout">Log Out</b-button></Navbar>
     <div class="col">
-      <b-form inline>
+      <b-form @submit.prevent="addRoom" inline>
         <h4 class="mr-3">Add New Room</h4>
-        <b-input class="mb-2 mr-sm-3 mb-sm-0" placeholder="Room Name"></b-input>
-        <b-button class="ml-sm-3" variant="secondary">Save</b-button>
+        <b-input
+          v-model="roomName"
+          class="mb-2 mr-sm-3 mb-sm-0"
+          placeholder="Room Name"
+        ></b-input>
+        <b-button class="ml-sm-3" type="submit" variant="secondary"
+          >Create</b-button
+        >
       </b-form>
     </div>
     <div class="row">
@@ -29,10 +35,18 @@ export default {
   },
   data() {
     return {
-      rooms: []
+      rooms: [],
+      roomName: ""
     };
   },
   methods: {
+    addRoom() {
+      const data = {
+        name: this.roomName,
+        players: [{ name: this.$store.state.name }]
+      };
+      console.log(data);
+    },
     fetchRooms() {
       Axios({
         method: "get",
