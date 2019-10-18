@@ -5,14 +5,18 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    name: null
+    username: null,
+    roomName: ""
   },
   mutations: {
     login(state, payload) {
-      state.name = payload;
+      state.username = payload;
     },
     logout(state) {
-      state.name = null;
+      state.username = null;
+    },
+    setRoom(state, name) {
+      state.roomName = name;
     }
   },
   actions: {},

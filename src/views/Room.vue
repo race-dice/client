@@ -8,6 +8,7 @@
 <script>
 import Navbar from "@/components/Navbar";
 import Axios from "axios";
+import db from "@/config/firestore";
 
 export default {
   name: "Room",
@@ -15,16 +16,18 @@ export default {
     Navbar
   },
   data() {
-    [];
+    return {
+      rooms: []
+    };
   },
   methods: {
     fetchRooms() {
-      Axios({
-        method: "get",
-        url: "http://localhost:3000/room"
-      }).then(rooms => {
-        this.rooms = rooms;
-      });
+      db.collection("rooms")
+        .onSnapshot((docs) => {
+            docs.forEach(doc => {
+              rooms.push(doc.data())
+            })
+        });
     }
   },
   mounted() {

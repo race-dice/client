@@ -26,6 +26,7 @@
 <script>
 import Swal from "sweetalert2";
 import Axios from "axios";
+import io from "socket.io-client";
 
 export default {
   name: "game",
@@ -33,7 +34,8 @@ export default {
     return {
       object: null,
       car1: 0,
-      car2: 7
+      car2: 7,
+      socket: io.connect("http://localhost:3000")
     };
   },
   methods: {
@@ -43,20 +45,19 @@ export default {
         Swal.fire("Congrats!!", "You Won!!", "success");
       }
     },
-    fetchUser() {
-        Axios({
-            method: "get",
-            url: "http://localhost:3000/user"
-        })
-        .then(({ data }) => {
-            console.log(data)
-        })
-        .catch(console.log)
+    fetchRoom() {
+      Axios({
+        method: "get",
+        url: "http://localhost:3000/user"
+      });
     }
   },
   mounted() {
     // this.$store.state.name ? this.fetchUser() : this.$router.push("/");
-    this.fetchUser()
+    this.fetchRoom();
+    this.socket.on("dataroom", payload => {
+      console.log(payload);
+    });
   }
 };
 </script>
