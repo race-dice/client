@@ -62,4 +62,8 @@ export default {
   background-color: #eaeaea;
   min-height: 69vh;
 }
+
+audio {
+visibility: hidden
+}
 </style>
