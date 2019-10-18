@@ -5,8 +5,8 @@
         <h2>{{ room.name }}</h2>
         <h4 style="">Players:</h4>
         <b-card id="players">
-          <div id="cover" v-for="(player, index) in room.players" :key="index">
-            {{ index + 1 }}. {{ player }}
+          <div id="cover" v-for="(player, index) in players" :key="index">
+            {{ index + 1 }}. {{ players }}
           </div>
         </b-card>
       </b-card-text>
@@ -17,15 +17,21 @@
 
 <script>
 import Swal from "sweetalert2";
+import Axios from "axios";
 
 export default {
   name: "Room",
   props: {
     room: Object
   },
+  data() {
+    return {
+      players: []
+    };
+  },
   methods: {
     verify() {
-      if (this.room.players.length < 2) {
+      if (this.players.length < 5) {
         Swal.fire({
           title: "Are you sure?",
           text: "You are going to untouched grounds!",
@@ -42,7 +48,20 @@ export default {
       } else {
         Swal.fire("Oops", "Room Is Already Full", "error");
       }
+    },
+    fetchPlayers() {
+      Axios({
+        method: "get",
+        url: `http://localhost:3000/user/${this.room._id}`
+      })
+        .then(({ data }) => {
+          this.players = data;
+        })
+        .catch(console.log);
     }
+  },
+  mounted() {
+    this.fetchPlayers();
   }
 };
 </script>

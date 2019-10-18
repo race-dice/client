@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -29,7 +31,14 @@ export default {
   methods: {
     login() {
       this.$store.commit("login", this.name);
-      this.$router.push("/room");
+      axios({
+        method: "post",
+        url: "http://localhost:3000/user/register",
+        data: { username: this.name }
+      }).then(({ data }) => {
+        this.$router.push("/room");
+        this.$store.commit("login", data);
+      });
     }
   }
 };
@@ -47,7 +56,7 @@ input {
   background-color: #eaeaea;
   height: 30vh !important;
   width: 50vw;
-  margin-left: 20%;
+  margin-left: 10%;
   justify-content: center !important;
 }
 </style>
