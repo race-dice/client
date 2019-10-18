@@ -16,10 +16,15 @@ const routes = [
       import(/* webpackChunkName: "room" */ "@/views/RoomList.vue")
   },
   {
+    path: "/play",
+    name: "play",
+    component: () => import(/* webpackChunkName: "home" */ "../views/Play.vue")
+  },
+  {
     path: "/game",
     name: "game",
     component: () =>
-      import(/* webpackChunkName: "game" */ "@/components/Board.vue")
+    import(/* webpackChunkName: "game" */ "@/components/Board.vue")
   }
 ];
 
