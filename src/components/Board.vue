@@ -110,19 +110,19 @@ export default {
       }
     },
     fetchUser() {
-        Axios({
-            method: "get",
-            url: "http://localhost:3000/user"
-        })
+      Axios({
+        method: "get",
+        url: "http://localhost:3000/user"
+      })
         .then(({ data }) => {
-            console.log(data)
+          console.log(data);
         })
-        .catch(console.log)
+        .catch(console.log);
     }
   },
   mounted() {
     // this.$store.state.name ? this.fetchUser() : this.$router.push("/");
-    this.fetchUser()
+    this.fetchUser();
   }
 };
 </script>
